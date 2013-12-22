@@ -121,6 +121,23 @@ void reset(){
   powerOnOrder[2] = 2;
   powerOnOrder[3] = 0;
   powerOnOrder[4] = 3;
+ 
+  for(int i = 4; i > 0; i--){
+    int rand = random(i+1);
+    if(rand != i){
+      int t = warmupOrder[i];
+      warmupOrder[i] = warmupOrder[rand];
+      warmupOrder[rand] = t;
+    }
+  }
+  for(int i = 4; i > 0; i--){
+    int rand = random(i+1);
+    if(rand != i){
+      int t = powerOnOrder[i];
+      powerOnOrder[i] = powerOnOrder[rand];
+      powerOnOrder[rand] = t;
+    }
+  }
 
   leds[6].r = 255;
   leds[6].g = 0;
@@ -205,7 +222,7 @@ void readSwitches(){
 void readAnalog(){
     //do analog
   int valA = 11 - map(analogRead(0), 0, 1024, 10,0);
-  int valB = 11 - map(analogRead(1), 0, 1024, 10,0);
+  int valB = 11 - map(analogRead(3), 0, 1024, 10,0);
 
   if(valA != lastA){
     lastA = valA;
