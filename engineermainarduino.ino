@@ -70,8 +70,8 @@ void setup(){
   //power man buttons
   pinMode(5, INPUT);
   digitalWrite(5, HIGH);
-  pinMode(19, INPUT);
-  digitalWrite(19, HIGH);
+  pinMode(6, INPUT);
+  digitalWrite(6, HIGH);
   pinMode(7, INPUT);
   digitalWrite(7, HIGH);
   pinMode(8, INPUT);
@@ -195,11 +195,9 @@ void readSwitches(){
   for(int i = 0; i < 4; i++){
     
     byte a = 0;
-    if(i == 1){
-      a = digitalRead(19);
-    } else {
-      a = digitalRead(5+i);
-    }
+    
+    a = digitalRead(5+i);
+    
     
     if( a == LOW){
       if(! (lastPowerButtons & (1 << i) > 0) && lastDbTime[i] + 50 < millis()){
@@ -221,8 +219,8 @@ void readSwitches(){
 
 void readAnalog(){
     //do analog
-  int valA = 11 - map(analogRead(0), 0, 1024, 10,0);
-  int valB = 11 - map(analogRead(3), 0, 1024, 10,0);
+  int valA = 11 - map(analogRead(4), 0, 1024, 10,0);
+  int valB = 11 - map(analogRead(5), 0, 1024, 10,0);
 
   if(valA != lastA){
     lastA = valA;
