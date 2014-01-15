@@ -453,9 +453,9 @@ void loop(){
       leds[i].r = 0;
       leds[i].g = 255;
       leds[i].b = 0;
-      if(switches[i] != 2){
-        powerState = false;
-      }
+      //if(switches[i] != 2){
+       // powerState = false;
+      //}
     }
     //power light
     leds[5].g = 255;
