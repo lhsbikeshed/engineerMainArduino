@@ -356,13 +356,13 @@ void updatePowerRings(){
 
       if(ringLightState){
         if(ledId < 4){
-          leds[baseLed + ledId] = 0x550000;
+          leds[baseLed + ledId] = 0x220000;
         } 
         else if (ledId < 8){
-          leds[baseLed + ledId] = 0x555500;
+          leds[baseLed + ledId] = 0x222200;
         } 
         else {
-          leds[baseLed + ledId] = 0x005500;
+          leds[baseLed + ledId] = 0x002200;
         } 
       } 
       else {
