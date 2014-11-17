@@ -496,7 +496,7 @@ void stateOff() {
   ringLightState = false;
 
   // ------clear reactor leds
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < NUM_PANEL_LEDS; i++) {
     leds[i] = CRGB::Black;
   }
   *ledReactor = CRGB::Black;
