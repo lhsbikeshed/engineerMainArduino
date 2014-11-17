@@ -14,9 +14,11 @@
 // led stuff  ------------------
 // led clock on 13
 // led data on 11
-#define NUMPIXELS      54
 
-#define REACTORLED    53
+#define NUM_PANEL_LEDS  5
+#define PIXELS_PER_RING 12
+#define NUM_RINGS       4
+#define NUMPIXELS       NUM_PANEL_LEDS + PIXELS_PER_RING * NUM_RINGS + 1
 
 
 
@@ -90,6 +92,14 @@ boolean ringLightState = false;
 
 // led states
 CRGB leds[NUMPIXELS];
+CRGB *ledsPanel = &leds[0],
+     *ledRings[NUM_RINGS] = {
+       &leds[NUM_PANEL_LEDS],
+       &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 1],
+       &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 2],
+       &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 3]
+     },
+     *ledReactor = &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * NUM_RINGS];
 
 
 // serial handling
@@ -120,6 +130,7 @@ void setup() {
 
   digitalWrite(PIN_CLOCK, LOW);
 
+  // I'm pretty sure you shouldn't do this.
   memset(leds, 0, NUMPIXELS * 3);
 
   // serial shit
@@ -152,10 +163,10 @@ void timerIsr() {
 }
 
 void reset() {
-  for (int i = 0; i < 5; i++) {
-    leds[i].r = 0;
-    leds[i].g = 0;
-    leds[i].b = 0;
+  for (int i = 0; i < NUM_PANEL_LEDS; i++) {
+    ledsPanel[i].r = 0;
+    ledsPanel[i].g = 0;
+    ledsPanel[i].b = 0;
   }
 
   warmupOrder[0] = 0;
@@ -188,7 +199,7 @@ void reset() {
     }
   }
 
-  leds[REACTORLED] = 0xFF0000;
+  *ledReactor = 0xFF0000;
 
   gameState = STATE_OFF;
   currentSwitch = 0;
@@ -324,30 +335,31 @@ void readAnalog() {
 
 /*do the ring leds*/
 void updatePowerRings() {
-  for (int i = 5; i < NUMPIXELS; i++) {
-    leds[i] = 0x000000;
+  int i, j;
+  // Reset all LEDs to black
+  // TODO: Potential subtle bug: Previous iteration of this also set reactor led to 0.
+  for (i = 0; i < NUM_RINGS; i++) {
+    for (j = 0; j < PIXELS_PER_RING; j++) {
+      ledRings[i][j] = 0x000000;
+    }
   }
 
-  int baseLed = 5;
-  for (int i = 0; i < 4; i++) {
-    for (int ledId = 0; ledId < powerLevels[i]; ledId++) {
+  if (!ringLightState)
+    return;
 
-      if (ringLightState) {
-        if (ledId < 4) {
-          leds[baseLed + ledId] = 0x220000;
-        }
-        else if (ledId < 8) {
-          leds[baseLed + ledId] = 0x222200;
-        }
-        else {
-          leds[baseLed + ledId] = 0x002200;
-        }
+  int ledId;
+  for (i = 0; i < NUM_RINGS; i++) {
+    for (ledId = 0; ledId < powerLevels[i]; ledId++) {
+      if (ledId < 4) {
+        ledRings[i][ledId] = 0x220000;
+      }
+      else if (ledId < 8) {
+        ledRings[i][ledId] = 0x222200;
       }
       else {
-        leds[baseLed + ledId] = 0x000000;
+        ledRings[i][ledId] = 0x002200;
       }
     }
-    baseLed += 12;
   }
 }
 
@@ -358,8 +370,8 @@ void processBuffer() {
   }
   else if (c == 'k') {   // ship was killed, turn off all the bling
     gameState = STATE_DEAD;
-    for (int i = 0; i < 6; i++) {
-      leds[i] = 0;
+    for (int i = 0; i < NUM_PANEL_LEDS; i++) {
+      ledsPanel[i] = 0;
     }
   }
   else if (c == 'D') {   // set dial value, format is D<dial num + 65><value + 65>
@@ -476,23 +488,23 @@ void stateOff() {
   for (int i = 0; i < 5; i++) {
     leds[i] = 0;
   }
-  leds[REACTORLED] = 0;
+  *ledReactor = 0;
   // --------------------------
 
   // ----------- blink the reactor leds red
   if (blinker) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < NUM_PANEL_LEDS; i++) {
       if (switches[i] != 1) {
-        leds[i] = 0xFF0000;
+        ledsPanel[i] = 0xFF0000;
       }
     }
-    leds[REACTORLED] = 0xFF0000;
+    *ledReactor = 0xFF0000;
   }
   else {
-    for (int i = 0; i < 5; i++) {
-      leds[i] = 0;
+    for (int i = 0; i < NUM_PANEL_LEDS; i++) {
+      ledsPanel[i] = 0;
     }
-    leds[REACTORLED] = 0;
+    *ledReactor = 0;
   }
 
   boolean states = true;
@@ -514,17 +526,17 @@ void stateWarmup() {
   int curLight = warmupOrder[currentSwitch];
   // clear leds
   // set the reactor switch led to red
-  leds[NUMPIXELS] = 0xFF0000;
+  *ledReactor = 0xFF0000;
 
   if (blinker) {
     // blink the current light
-    leds[curLight].r = 255;
-    leds[curLight].g = 92;
-    leds[curLight].b = 15;
+    ledsPanel[curLight].r = 255;
+    ledsPanel[curLight].g = 92;
+    ledsPanel[curLight].b = 15;
   }
   else {
     // blink current light
-    leds[curLight] = 0;
+    ledsPanel[curLight] = 0;
   }
 
   // current switch is 5, all orange is done
@@ -535,9 +547,9 @@ void stateWarmup() {
 
   if (switchesChanged) {
     if (lastChangedSwitch == curLight) {
-      leds[curLight].r = 255;
-      leds[curLight].g = 92;
-      leds[curLight].b = 15;
+      ledsPanel[curLight].r = 255;
+      ledsPanel[curLight].g = 92;
+      ledsPanel[curLight].b = 15;
       currentSwitch ++;
       Serial.print("S");
       Serial.print(currentSwitch);
@@ -552,14 +564,14 @@ void stateWarmup() {
 void statePowering() {
   int curLight = powerOnOrder[currentSwitch];
   // set the reactor switch led to red
-  leds[REACTORLED] = 0xFF0000;
+  *ledReactor = 0xFF0000;
 
   // ----- blink current light green
   if (blinker) {
-    leds[curLight] = 0x00C800;
+    ledsPanel[curLight] = 0x00C800;
   }
   else {
-    leds[curLight] = 0;
+    ledsPanel[curLight] = 0;
   }
 
   // made it to switch 5 without cocking up, switch to pre-on state
@@ -572,7 +584,7 @@ void statePowering() {
   if (switchesChanged) {
     if (lastChangedSwitch == curLight) {
       if (switches[curLight] == 2) {
-        leds[curLight] = 0x00C800;
+        ledsPanel[curLight] = 0x00C800;
         currentSwitch ++;
         Serial.print("S");
         Serial.print(currentSwitch + 5);
@@ -592,8 +604,8 @@ void statePowering() {
 void statePreOn() {
   // lets check that someone hasnt cocked the switches up
   boolean powerState = true;
-  for (int i = 0; i < 5; i++) {
-    leds[i] = 0;
+  for (int i = 0; i < NUM_PANEL_LEDS; i++) {
+    ledsPanel[i] = 0;
     if (switches[i] != 2) {
       powerState = false;
     }
@@ -605,10 +617,10 @@ void statePreOn() {
 
   // blink the reactor light
   if (blinker) {
-    leds[REACTORLED] = 0x00FF00;
+    *ledReactor = 0x00FF00;
   }
   else {
-    leds[REACTORLED] = 0;
+    *ledReactor = 0;
   }
 
   // if the reactor twisty switch has been twisted then turn the ship on
@@ -622,14 +634,14 @@ void statePreOn() {
 // On state, set everything to green
 void stateOn() {
   boolean powerState = true;
-  for (int i = 0; i < 5; i++) {
-    leds[i] = 0x00FF00;
+  for (int i = 0; i < NUM_PANEL_LEDS; i++) {
+    ledsPanel[i] = 0x00FF00;
     // if(switches[i] != 2){
     // powerState = false;
     // }
   }
   // power light
-  leds[REACTORLED] = 0x00FF00;
+  *ledReactor = 0x00FF00;
 
   // if someone turns reactor switch off then
   if (switches[5] != 0) {
