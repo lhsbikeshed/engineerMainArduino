@@ -36,20 +36,12 @@ void readAnalog() {
 }
 
 void readAirlock() {
-  if (lastAirlockRead + 10 < millis()) {
-    lastAirlockRead = millis();
-    byte b = digitalRead(PIN_AIRLOCK);
-    if ((b == lastAirlock)) {
-      if (b == 0) {
-        if (!lockSent) {
-          Serial.print("L,");
-          lockSent = true;
-        }
-      }
-      else {
-        lockSent = false;
-      }
-    }
-    lastAirlock = b;
+  byte b = digitalRead(PIN_AIRLOCK);
+  if (b == lastAirlock) {
+    return;
+  }
+  lastAirlock = b;
+  if (b == 0) {
+    Serial.print("L,");
   }
 }
