@@ -30,16 +30,6 @@ void setup() {
   setupSwitches();
   setupEncoders();
 
-  // power man buttons
-  pinMode(5, INPUT);
-  digitalWrite(5, HIGH);
-  pinMode(6, INPUT);
-  digitalWrite(6, HIGH);
-  pinMode(7, INPUT);
-  digitalWrite(7, HIGH);
-  pinMode(8, INPUT);
-  digitalWrite(8, HIGH);
-
   // serial shit
   Serial.begin(9600);
   reset();
