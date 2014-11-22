@@ -93,4 +93,9 @@ void readSwitches() {
 		}
 	}
 	switches[5] = (switchPos & 1l << 15) == 0 ? 1 : 0; // inverted for the power switch
+	if (switches[5] != lastReactor) {
+		lastReactor = switches[5];
+		switchesChanged = true;
+		lastChangedSwitch = 5;
+	}
 }
