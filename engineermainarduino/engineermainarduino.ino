@@ -59,6 +59,15 @@ void processBuffer() {
     case 'd': // Damage
       damageTimer = 60;
       break;
+    case 'p': // Power off
+      gameState = STATE_OFF;
+      resetLEDs();
+      break;
+    case 'P': // Power on
+      gameState = STATE_ON;
+      resetLEDs();
+      ringLightState = true;
+      break;
   }
 }
 
