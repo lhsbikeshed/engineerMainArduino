@@ -1,6 +1,6 @@
 #define PIN_AIRLOCK 16
-#define PIN_ENCODER_A 4
-#define PIN_ENCODER_B 5
+#define PIN_ENCODER_A 5
+#define PIN_ENCODER_B 4
 
 // analog bits
 int lastA = -1;
@@ -23,13 +23,13 @@ void readAnalog() {
 
   if (valA != lastA) {
     lastA = valA;
-    Serial.print("B");
+    Serial.print("A");
     Serial.print(valA);
     Serial.print(",");
   }
   if (valB != lastB) {
     lastB = valB;
-    Serial.print("A");
+    Serial.print("B");
     Serial.print(valB);
     Serial.print(",");
   }
