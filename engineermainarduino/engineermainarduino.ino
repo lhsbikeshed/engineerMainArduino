@@ -45,19 +45,20 @@ void reset() {
 }
 
 void processBuffer() {
-  char c = buffer[0];
-  if ( c == 'r') {        // reset the game states
-    reset();
-  }
-  else if (c == 'k') {   // ship was killed, turn off all the bling
-    gameState = STATE_DEAD;
-    resetLEDs();
-  }
-  else if (c == 'D') {   // set dial value, format is D<dial num + 65><value + 65>
-    // +65 is so that its readable in serial monitor A=0, B=1 etc
-  }
-  else if (c == 'd') { // damage
-    damageTimer = 60;
+  switch(buffer[0]) {
+    case 'r': // reset the game states
+      reset();
+      break;
+    case 'k': // ship was killed, turn off all the bling
+      gameState = STATE_DEAD;
+      resetLEDs();
+      break;
+    case 'D': // set dial value, format is D<dial num + 65><value + 65>
+      // +65 is so that its readable in serial monitor A=0, B=1 etc
+      break;
+    case 'd': // Damage
+      damageTimer = 60;
+      break;
   }
 }
 
@@ -99,23 +100,25 @@ void loop() {
 
   LEDBlinkThink();
 
-  if (gameState == STATE_DEAD) {
-    stateDead();
-  }
-  else if (gameState == STATE_OFF) {      // -----ship is off-------
-    stateOff();
-  }
-  else if (gameState == STATE_WARMUP) {
-    stateWarmup();
-  }
-  else if (gameState == STATE_POWERING) {
-    statePowering();
-  }
-  else if (gameState == STATE_PREON) {
-    statePreOn();
-  }
-  else if (gameState == STATE_ON) {
-    stateOn();
+  switch(gameState) {
+    case STATE_DEAD:
+      stateDead();
+      break;
+    case STATE_OFF:
+      stateOff();
+      break;
+    case STATE_WARMUP:
+      stateWarmup();
+      break;
+    case STATE_POWERING:
+      statePowering();
+      break;
+    case STATE_PREON:
+      statePreOn();
+      break;
+    case STATE_ON:
+      stateOn();
+      break;
   }
 
   // flicker everything if the damage timer is > 0
