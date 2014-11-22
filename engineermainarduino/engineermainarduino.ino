@@ -63,11 +63,7 @@ void processBuffer() {
   }
 }
 
-void loop() {
-  // memset(leds, 0, NUMPIXELS * 3);
-  readEncoders();
-  updatePowerRings();
-
+void readSerial() {
   // -------------------- serial reads --------------
   while ( Serial.available() > 0) {  // If data is available,
     char c = Serial.read();
@@ -85,6 +81,14 @@ void loop() {
       }
     }
   }
+}
+
+void loop() {
+  // memset(leds, 0, NUMPIXELS * 3);
+  readEncoders();
+  updatePowerRings();
+
+  readSerial();
 
   if (gameState != STATE_DEAD) {
     readSwitches();
@@ -94,7 +98,6 @@ void loop() {
     if (damageTimer > 0) {
       damageTimer --;
     }
-
   }
 
   LEDBlinkThink();
