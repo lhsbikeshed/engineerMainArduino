@@ -1,5 +1,13 @@
 #include "leds.h"
 
+#define LED_PIN 13
+
+// blinking stuff
+int lastBlinkTime = 0;
+int nextBlinkTime = 100;
+boolean blinker = false;
+int counter = 0;
+
 void setupLEDs() {
 	FastLED.addLeds<NEOPIXEL, LED_PIN>(leds, NUMPIXELS);
 }
@@ -7,7 +15,11 @@ void setupLEDs() {
 void resetLEDs() {
 	// Set all LEDs to black
 	memset(leds, 0, NUMPIXELS * 3);
-	nextBlinkTime = 100;
+	setBlinkSpeed(100);
+}
+
+void setBlinkSpeed(int blinkSpeed) {
+	nextBlinkTime = blinkSpeed;
 }
 
 void LEDBlinkThink() {

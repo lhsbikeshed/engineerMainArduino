@@ -17,7 +17,7 @@ void statePowering() {
   if (currentSwitch == 5) {
     currentSwitch = 0;
     gameState = STATE_PREON;
-    nextBlinkTime = 75;
+    setBlinkSpeed(75);
   }
   // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
   if (switchesChanged) {

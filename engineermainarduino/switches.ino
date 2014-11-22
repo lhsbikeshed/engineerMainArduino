@@ -1,5 +1,24 @@
 #include "switches.h"
 
+#define PIN_DATA  12
+#define PIN_CLOCK 3
+#define PIN_LOAD  2
+
+byte lastSwitches[6];
+byte lastReactor;
+
+// map bits to switch num and pos
+// {bit, switch pos }
+byte switchMap[] = {
+  3, 2,
+  1, 0,
+  7, 6,
+  5, 4,
+  12, 13
+};
+
+long switchPos = 0;
+
 void setupSwitches() {
 	pinMode(PIN_CLOCK, OUTPUT);
 	pinMode(PIN_LOAD, OUTPUT);
@@ -70,7 +89,6 @@ void readSwitches() {
 		if (lastSwitches[i] != switches[i]) {
 			lastSwitches[i] = p;
 			lastChangedSwitch = i;
-			//      Serial.(lastChangedSwitch);
 			switchesChanged = true;
 		}
 	}

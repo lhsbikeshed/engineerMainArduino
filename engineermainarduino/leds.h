@@ -5,14 +5,6 @@
 #define NUM_RINGS       4
 #define NUMPIXELS       NUM_PANEL_LEDS + PIXELS_PER_RING * NUM_RINGS + 1
 
-#define LED_PIN 13
-
-// blinking stuff
-int lastBlinkTime = 0;
-int nextBlinkTime = 100;
-boolean blinker = false;
-int counter = 0;
-
 // led states
 CRGB leds[NUMPIXELS];
 CRGB *ledsPanel = &leds[0],
