@@ -51,9 +51,7 @@ void processBuffer() {
   }
   else if (c == 'k') {   // ship was killed, turn off all the bling
     gameState = STATE_DEAD;
-    for (int i = 0; i < NUM_PANEL_LEDS; i++) {
-      ledsPanel[i] = CRGB::Black;
-    }
+    resetLEDs();
   }
   else if (c == 'D') {   // set dial value, format is D<dial num + 65><value + 65>
     // +65 is so that its readable in serial monitor A=0, B=1 etc
@@ -84,7 +82,6 @@ void readSerial() {
 }
 
 void loop() {
-  // memset(leds, 0, NUMPIXELS * 3);
   readEncoders();
   updatePowerRings();
 
