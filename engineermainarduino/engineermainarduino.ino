@@ -8,15 +8,17 @@
 
 
 // --------------- game logic bits ----------
-#define STATE_DEAD -1
-#define STATE_OFF 0
-#define STATE_WARMUP 1
-#define STATE_POWERING 2
-#define STATE_PREON 3
-#define STATE_ON 4
+enum State {
+  STATE_DEAD = -1,
+  STATE_OFF = 0,
+  STATE_WARMUP,
+  STATE_POWERING,
+  STATE_PREON,
+  STATE_ON,
+};
 
 // reactor puzzle game state
-int gameState = STATE_OFF;
+State gameState = STATE_OFF;
 
 // serial handling
 char buffer[10]; // serial buffer
