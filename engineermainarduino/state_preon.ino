@@ -6,7 +6,7 @@ void statePreOn() {
   boolean powerState = true;
   for (int i = 0; i < NUM_PANEL_LEDS; i++) {
     ledsPanel[i] = CRGB::Black;
-    if (switches[i] != 2) {
+    if (switches[i] != SWITCH_POS_UP) {
       powerState = false;
     }
   }

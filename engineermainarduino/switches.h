@@ -1,5 +1,10 @@
 #pragma once
 
+enum SwitchPos {
+	SWITCH_POS_UP = 2,
+	SWITCH_POS_MID = 0,
+	SWITCH_POS_DOWN = 1,
+};
 
 // main pane switches
 byte switches[6];

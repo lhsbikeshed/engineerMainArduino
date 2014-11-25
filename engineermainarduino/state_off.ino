@@ -14,7 +14,7 @@ void stateOff() {
   // ----------- blink the reactor leds red
   if (blinker) {
     for (int i = 0; i < NUM_PANEL_LEDS; i++) {
-      if (switches[i] != 1) {
+      if (switches[i] != SWITCH_POS_DOWN) {
         ledsPanel[i] = BrightRed;
       }
     }
@@ -28,11 +28,13 @@ void stateOff() {
   }
 
   boolean states = true;
+  // Top switches
   for (int i = 0; i < 5; i++) {
-    if (switches[i] != 1) {
+    if (switches[i] != SWITCH_POS_DOWN) {
       states = false;
     }
   }
+  // Reactor switch
   if (switches[5] != 1) {
     states = false;
   }
