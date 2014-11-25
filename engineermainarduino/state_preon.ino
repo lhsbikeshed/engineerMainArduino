@@ -5,7 +5,9 @@ void statePreOn() {
   // lets check that someone hasnt cocked the switches up
   boolean powerState = true;
   for (int i = 0; i < NUM_PANEL_LEDS; i++) {
-    ledsPanel[i] = CRGB::Black;
+    if (blinker) {
+      ledsPanel[i] = PanelGreen;
+    }
     if (switches[i] != SWITCH_POS_UP) {
       powerState = false;
     }
