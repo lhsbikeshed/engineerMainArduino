@@ -10,12 +10,18 @@ int counter = 0;
 
 void setupLEDs() {
 	FastLED.addLeds<NEOPIXEL, LED_PIN>(leds, NUMPIXELS);
+	resetLEDs();
+}
+
+void clearLEDs() {
+	// Set all LEDs to black
+	memset(leds, 0, NUMPIXELS * 3);
 }
 
 void resetLEDs() {
-	// Set all LEDs to black
-	memset(leds, 0, NUMPIXELS * 3);
+	clearLEDs();
 	setBlinkSpeed(100);
+	ringLightState = false;
 }
 
 void setBlinkSpeed(int blinkSpeed) {
