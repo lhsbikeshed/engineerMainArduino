@@ -20,21 +20,10 @@ void statePowering() {
     setBlinkSpeed(75);
   }
   // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
-  if (switchesChanged) {
-    if (lastChangedSwitch == curLight) {
-      if (switches[curLight] == 2) {
-        ledsPanel[curLight] = PanelGreen;
-        currentSwitch ++;
-        Serial.print("S");
-        Serial.print(currentSwitch + 5);
-        Serial.print(",");
-      }
-      else {
-        reset();
-      }
-    }
-    else {
-      reset();
-    }
+  if (expectSwitchChange(curLight, SWITCH_POS_UP)) {
+    currentSwitch++;
+    Serial.print("S");
+    Serial.print(currentSwitch + 5);
+    Serial.print(",");
   }
 }

@@ -21,17 +21,11 @@ void stateWarmup() {
     gameState = STATE_POWERING;
   }
 
-  if (switchesChanged) {
-    if (lastChangedSwitch == curLight) {
-      ledsPanel[curLight] = PanelYellow;
-      currentSwitch ++;
-      Serial.print("S");
-      Serial.print(currentSwitch);
-      Serial.print(",");
-    }
-    else {
-      reset();
-    }
+  if (expectSwitchChange(curLight, SWITCH_POS_MID)) {
+    currentSwitch++;
+    Serial.print("S");
+    Serial.print(currentSwitch);
+    Serial.print(",");
   }
 }
 

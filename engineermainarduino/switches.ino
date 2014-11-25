@@ -99,3 +99,16 @@ void readSwitches() {
 		lastChangedSwitch = 5;
 	}
 }
+
+bool expectSwitchChange(int which, SwitchPos pos) {
+	if (!switchesChanged) {
+		return false;
+	}
+	if (lastChangedSwitch == which) {
+		if (switches[which] == pos) {
+			return true;
+		}
+	}
+	reset();
+	return false;
+}
