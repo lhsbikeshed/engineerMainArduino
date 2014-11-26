@@ -3,16 +3,19 @@
 void stateWarmup() {
   int curLight = warmupOrder[currentSwitch];
   // clear leds
+  clearLEDs();
+  // turn the on switches that're yellow
+  for (int i = 0; i < NUM_PANEL_LEDS; ++i) {
+    if (switches[i] == SWITCH_POS_MID) {
+      ledsPanel[i] = PanelYellow;
+    }
+  }
   // set the reactor switch led to red
   *ledReactor = BrightRed;
 
+  // blink the current light
   if (blinker) {
-    // blink the current light
     ledsPanel[curLight] = PanelYellow;
-  }
-  else {
-    // blink current light
-    ledsPanel[curLight] = CRGB::Black;
   }
 
   // current switch is 5, all orange is done

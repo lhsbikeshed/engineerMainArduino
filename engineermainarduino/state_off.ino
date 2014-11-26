@@ -2,14 +2,7 @@
 
 
 void stateOff() {
-  ringLightState = false;
-
-  // ------clear reactor leds
-  for (int i = 0; i < NUM_PANEL_LEDS; i++) {
-    leds[i] = CRGB::Black;
-  }
-  *ledReactor = CRGB::Black;
-  // --------------------------
+  clearLEDs();
 
   // ----------- blink the reactor leds red
   if (blinker) {
@@ -19,12 +12,6 @@ void stateOff() {
       }
     }
     *ledReactor = BrightRed;
-  }
-  else {
-    for (int i = 0; i < NUM_PANEL_LEDS; i++) {
-      ledsPanel[i] = CRGB::Black;
-    }
-    *ledReactor = CRGB::Black;
   }
 
   boolean states = true;
