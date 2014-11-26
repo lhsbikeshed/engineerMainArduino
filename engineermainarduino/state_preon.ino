@@ -15,6 +15,7 @@ void statePreOn() {
   // reset if they screwed up
   if (powerState == false) {
     reset();
+    return;
   }
 
   // blink the reactor light
