@@ -9,8 +9,8 @@
 
 // --------------- game logic bits ----------
 enum State {
-  STATE_DEAD = -1,
-  STATE_OFF = 0,
+  STATE_DEAD,
+  STATE_OFF,
   STATE_WARMUP,
   STATE_POWERING,
   STATE_PREON,
