@@ -2,20 +2,13 @@
 #include <ClickEncoder.h>
 #include <TimerOne.h>
 
+#include "states.h"
 #include "leds.h"
 #include "encoders.h"
 #include "switches.h"
 
 
 // --------------- game logic bits ----------
-enum State {
-  STATE_DEAD,
-  STATE_OFF,
-  STATE_WARMUP,
-  STATE_POWERING,
-  STATE_PREON,
-  STATE_ON,
-};
 
 // reactor puzzle game state
 State gameState = STATE_OFF;
