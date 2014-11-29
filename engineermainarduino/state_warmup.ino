@@ -23,16 +23,17 @@ void stateWarmup() {
     ledsPanel[curLight] = PanelYellow;
   }
 
+  if (! expectSwitchChange(curLight, SWITCH_POS_MID)){
+    return;
+  }
+
+  currentSwitch++;
+  Serial.print("S");
+  Serial.print(currentSwitch);
+  Serial.print(",");
   // current switch is 5, all orange is done
   if (currentSwitch == 5) {
     setState(STATE_POWERING);
-  }
-
-  if (expectSwitchChange(curLight, SWITCH_POS_MID)) {
-    currentSwitch++;
-    Serial.print("S");
-    Serial.print(currentSwitch);
-    Serial.print(",");
   }
 }
 

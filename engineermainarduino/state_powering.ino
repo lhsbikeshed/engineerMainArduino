@@ -25,16 +25,17 @@ void statePowering() {
     ledsPanel[curLight] = PanelGreen;
   }
 
+  // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
+  if (! expectSwitchChange(curLight, SWITCH_POS_UP)) {
+    return;
+  }
+
+  currentSwitch++;
+  Serial.print("S");
+  Serial.print(currentSwitch + 5);
+  Serial.print(",");
   // made it to switch 5 without cocking up, switch to pre-on state
   if (currentSwitch == 5) {
     setState(STATE_PREON);
-    return;
-  }
-  // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
-  if (expectSwitchChange(curLight, SWITCH_POS_UP)) {
-    currentSwitch++;
-    Serial.print("S");
-    Serial.print(currentSwitch + 5);
-    Serial.print(",");
   }
 }
