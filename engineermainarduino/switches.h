@@ -1,14 +1,14 @@
 #pragma once
 
 enum SwitchPos {
-	SWITCH_POS_UP = 2,
-	SWITCH_POS_MID = 0,
-	SWITCH_POS_DOWN = 1,
+  SWITCH_POS_UP = 2,
+  SWITCH_POS_MID = 0,
+  SWITCH_POS_DOWN = 1,
 };
 
 enum ReactorSwitchPos {
-	REACTOR_SWITCH_ON = 0,
-	REACTOR_SWITCH_OFF = 1,
+  REACTOR_SWITCH_ON = 0,
+  REACTOR_SWITCH_OFF = 1,
 };
 
 #define REACTOR_SWITCH 5
