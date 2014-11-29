@@ -6,6 +6,13 @@ enum SwitchPos {
 	SWITCH_POS_DOWN = 1,
 };
 
+enum ReactorSwitchPos {
+	REACTOR_SWITCH_ON = 0,
+	REACTOR_SWITCH_OFF = 1,
+};
+
+#define REACTOR_SWITCH 5
+
 // main pane switches
 byte switches[6];
 boolean switchesChanged = false;

@@ -26,10 +26,10 @@ void stateOff() {
     }
   }
   // Reactor switch
-  if (switches[5] != 1) {
     states = false;
   }
   if (states) {
     setState(STATE_WARMUP);
+  if (switches[REACTOR_SWITCH] != REACTOR_SWITCH_OFF) {
   }
 }

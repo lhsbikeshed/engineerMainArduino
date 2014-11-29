@@ -18,7 +18,7 @@ void stateOn() {
   *ledReactor = BrightGreen;
 
   // if someone turns reactor switch off then
-  if (switches[5] != 0) {
+  if (switches[REACTOR_SWITCH] != REACTOR_SWITCH_ON) {
     reset();
   }
 }
