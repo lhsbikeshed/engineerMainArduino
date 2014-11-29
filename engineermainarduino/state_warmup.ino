@@ -1,5 +1,10 @@
 // WARMUP
 
+void setStateWarmup() {
+  lastChangedSwitch = -1;
+  currentSwitch = 0;
+}
+
 void stateWarmup() {
   int curLight = warmupOrder[currentSwitch];
   // clear leds
@@ -20,8 +25,7 @@ void stateWarmup() {
 
   // current switch is 5, all orange is done
   if (currentSwitch == 5) {
-    currentSwitch = 0;
-    gameState = STATE_POWERING;
+    setState(STATE_POWERING);
   }
 
   if (expectSwitchChange(curLight, SWITCH_POS_MID)) {

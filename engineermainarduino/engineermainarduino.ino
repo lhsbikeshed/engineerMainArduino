@@ -11,7 +11,7 @@
 // --------------- game logic bits ----------
 
 // reactor puzzle game state
-State gameState = STATE_OFF;
+State gameState = STATE_INVALID;
 
 // serial handling
 char buffer[10]; // serial buffer
@@ -30,13 +30,35 @@ void setup() {
   reset();
 }
 
+void setState(State state) {
+  if (gameState == state) {
+    return;
+  }
+  gameState = state;
+
+  switch(gameState) {
+    case STATE_DEAD:
+      return setStateDead();
+    case STATE_OFF:
+      return setStateOff();
+    case STATE_WARMUP:
+      return setStateWarmup();
+    case STATE_POWERING:
+      return setStatePowering();
+    case STATE_PREON:
+      return setStatePreOn();
+    case STATE_ON:
+      return setStateOn();
+  }
+}
+
 void reset() {
   resetLEDs();
   resetSwitches();
 
   *ledReactor = BrightRed;
 
-  gameState = STATE_OFF;
+  setState(STATE_OFF);
 }
 
 void processBuffer() {
@@ -45,8 +67,7 @@ void processBuffer() {
       reset();
       break;
     case 'k': // ship was killed, turn off all the bling
-      gameState = STATE_DEAD;
-      resetLEDs();
+      setState(STATE_DEAD);
       break;
     case 'D': // set dial value, format is D<dial num + 65><value + 65>
       // +65 is so that its readable in serial monitor A=0, B=1 etc
@@ -55,13 +76,10 @@ void processBuffer() {
       damageTimer = 60;
       break;
     case 'p': // Power off
-      gameState = STATE_OFF;
-      resetLEDs();
+      setState(STATE_OFF);
       break;
     case 'P': // Power on
-      gameState = STATE_ON;
-      resetLEDs();
-      ringLightState = true;
+      setState(STATE_ON);
       break;
   }
 }

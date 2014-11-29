@@ -1,5 +1,9 @@
 // OFF
 
+void setStateOff() {
+  resetLEDs();
+  setBlinkSpeed(100);
+}
 
 void stateOff() {
   clearLEDs();
@@ -26,7 +30,6 @@ void stateOff() {
     states = false;
   }
   if (states) {
-    gameState = STATE_WARMUP;
-    lastChangedSwitch = -1;
+    setState(STATE_WARMUP);
   }
 }

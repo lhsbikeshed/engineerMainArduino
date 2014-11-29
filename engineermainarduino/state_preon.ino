@@ -1,4 +1,7 @@
 // PRE-ON
+void setStatePreOn() {
+  setBlinkSpeed(75);
+}
 
 /* pre-on state, all lights blinking green, wait for reactor switch to be turned */
 void statePreOn() {
@@ -26,8 +29,7 @@ void statePreOn() {
 
   // if the reactor twisty switch has been twisted then turn the ship on
   if (switches[5] == 0) {
-    gameState = STATE_ON;
     Serial.print("R1,");
-    ringLightState = true;
+    setState(STATE_ON);
   }
 }

@@ -1,6 +1,7 @@
 // DEAD
 
-void stateDead() {
+void setStateDead() {
   resetLEDs();
-  ringLightState = false;
 }
+
+void stateDead() {}

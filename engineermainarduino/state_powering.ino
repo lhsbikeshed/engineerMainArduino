@@ -1,4 +1,8 @@
 // powering
+void setStatePowering() {
+  lastChangedSwitch = -1;
+  currentSwitch = 0;
+}
 
 void statePowering() {
   // clear leds
@@ -23,9 +27,8 @@ void statePowering() {
 
   // made it to switch 5 without cocking up, switch to pre-on state
   if (currentSwitch == 5) {
-    currentSwitch = 0;
-    gameState = STATE_PREON;
-    setBlinkSpeed(75);
+    setState(STATE_PREON);
+    return;
   }
   // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
   if (expectSwitchChange(curLight, SWITCH_POS_UP)) {
