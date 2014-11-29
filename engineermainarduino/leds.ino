@@ -15,7 +15,7 @@ void setupLEDs() {
 
 void clearLEDs() {
   // Set all LEDs to black
-  memset(leds, 0, NUMPIXELS * 3);
+  memset(leds, 0, sizeof(leds));
 }
 
 void resetLEDs() {
