@@ -36,7 +36,7 @@ void setState(State state) {
   }
   gameState = state;
 
-  switch(gameState) {
+  switch (gameState) {
     case STATE_DEAD:
       return setStateDead();
     case STATE_OFF:
@@ -64,7 +64,7 @@ void reset() {
 }
 
 void processBuffer() {
-  switch(buffer[0]) {
+  switch (buffer[0]) {
     case 'r': // reset the game states
       reset();
       break;
@@ -124,7 +124,7 @@ void loop() {
 
   LEDBlinkThink();
 
-  switch(gameState) {
+  switch (gameState) {
     case STATE_DEAD:
       stateDead();
       break;
