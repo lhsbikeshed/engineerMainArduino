@@ -57,18 +57,19 @@ void updatePowerRings() {
     return;
   }
 
-  int ledId;
+  int ledId, powerLevel, colour;
+  float pct;
+  CRGB ringColour;
   for (i = 0; i < NUM_RINGS; i++) {
-    for (ledId = 0; ledId < powerLevels[i]; ledId++) {
-      if (ledId < 4) {
-        ledRings[i][ledId] = RingRed;
-      }
-      else if (ledId < 8) {
-        ledRings[i][ledId] = RingYellow;
-      }
-      else {
-        ledRings[i][ledId] = RingGreen;
-      }
+    powerLevel = powerLevels[i];
+    if (powerLevel == 0) {
+      continue;
+    }
+    pct = (float) powerLevel / (float) PIXELS_PER_RING;
+    colour = floor(pct * 96);
+    ringColour = CHSV(colour, 255, 100);
+    for (ledId = 0; ledId < powerLevel; ledId++) {
+      ledRings[i][ledId] = ringColour;
     }
   }
 }
