@@ -63,11 +63,17 @@ void updatePowerRings() {
   for (i = 0; i < NUM_RINGS; i++) {
     powerLevel = powerLevels[i];
     if (powerLevel == 0) {
-      continue;
+      if (!blinker) {
+        continue;
+      }
+      ringColour = RingRed;
+      // Ensure the entire ring lights
+      powerLevel = PIXELS_PER_RING;
+    } else {
+      pct = (float)powerLevel / (float)PIXELS_PER_RING;
+      colour = floor(pct * 96);
+      ringColour = CHSV(colour, 255, 100);
     }
-    pct = (float) powerLevel / (float) PIXELS_PER_RING;
-    colour = floor(pct * 96);
-    ringColour = CHSV(colour, 255, 100);
     for (ledId = 0; ledId < powerLevel; ledId++) {
       ledRings[i][ledId] = ringColour;
     }
