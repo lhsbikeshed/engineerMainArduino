@@ -1,0 +1,7 @@
+Debug/
+Release/
+Visual Micro/
+*.sln
+*.suo
+*.sdf
+*.vcxproj*
