@@ -47,6 +47,8 @@ void setState(State state) {
       return setStatePowering();
     case STATE_PREON:
       return setStatePreOn();
+    case STATE_BOOTUP:
+      return setStateBootup();
     case STATE_ON:
       return setStateOn();
   }
@@ -138,6 +140,8 @@ void loop() {
     case STATE_PREON:
       statePreOn();
       break;
+    case STATE_BOOTUP:
+      return stateBootup();
     case STATE_ON:
       stateOn();
       break;

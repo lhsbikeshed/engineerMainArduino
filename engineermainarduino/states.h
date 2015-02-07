@@ -7,5 +7,6 @@ enum State {
   STATE_WARMUP,
   STATE_POWERING,
   STATE_PREON,
+  STATE_BOOTUP,
   STATE_ON,
 };
