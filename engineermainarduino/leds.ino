@@ -62,10 +62,10 @@ void updatePowerRings() {
   CRGB ringColour;
   for (i = 0; i < NUM_RINGS; i++) {
     powerLevel = powerLevels[i];
+    if (powerLevel < 4 && ! blinker) {
+      continue;
+    }
     if (powerLevel == 0) {
-      if (!blinker) {
-        continue;
-      }
       ringColour = RingRed;
       // Ensure the entire ring lights
       powerLevel = PIXELS_PER_RING;
