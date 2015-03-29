@@ -17,10 +17,13 @@ void setupAirlock() {
 }
 
 void readAnalog() {
-  // do analog
-  int valA = 11 - map(analogRead(PIN_ENCODER_A), 0, 1024, 10, 0);
-  int valB = 11 - map(analogRead(PIN_ENCODER_B), 0, 1024, 10, 0);
+  // do analog - old version supplies game with 0 - 10 values. 
+  //int valA = 11 - map(analogRead(PIN_ENCODER_A), 0, 1024, 10, 0);
+  //int valB = 11 - map(analogRead(PIN_ENCODER_B), 0, 1024, 10, 0);
 
+  int valA = analogRead(PIN_ENCODER_A);
+  int valB = analogRead(PIN_ENCODER_B);
+  
   if (valA != lastA) {
     lastA = valA;
     Serial.print("A");
