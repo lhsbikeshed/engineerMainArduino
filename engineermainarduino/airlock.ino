@@ -24,13 +24,13 @@ void readAnalog() {
   int valA = analogRead(PIN_ENCODER_A);
   int valB = analogRead(PIN_ENCODER_B);
   
-  if (valA != lastA) {
+  if (abs(valA - lastA) > 10) {
     lastA = valA;
     Serial.print("A");
     Serial.print(valA);
     Serial.print(",");
   }
-  if (valB != lastB) {
+  if (abs(valB - lastB) > 10) {
     lastB = valB;
     Serial.print("B");
     Serial.print(valB);
