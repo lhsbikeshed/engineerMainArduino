@@ -68,6 +68,9 @@ void processBuffer() {
     case 'r': // reset the game states
       reset();
       break;
+    case 'R': // Reactor is now on, end startup sequence
+      setState(STATE_ON);
+      break;
     case 'k': // ship was killed, turn off all the bling
       setState(STATE_DEAD);
       break;
