@@ -6,6 +6,7 @@
 #include "leds.h"
 #include "encoders.h"
 #include "switches.h"
+#include "bootup.h"
 
 
 // --------------- game logic bits ----------
@@ -145,7 +146,8 @@ void loop() {
       statePreOn();
       break;
     case STATE_BOOTUP:
-      return stateBootup();
+      stateBootup();
+      break;
     case STATE_ON:
       stateOn();
       break;

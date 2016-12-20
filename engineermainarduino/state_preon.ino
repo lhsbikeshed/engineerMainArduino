@@ -30,6 +30,6 @@ void statePreOn() {
   // if the reactor twisty switch has been twisted then turn the ship on
   if (switches[REACTOR_SWITCH] == REACTOR_SWITCH_ON) {
     Serial.print("R1,");
-    setState(STATE_ON);
+    setState(STATE_BOOTUP);
   }
 }
