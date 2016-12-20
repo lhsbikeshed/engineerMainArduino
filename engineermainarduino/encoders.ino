@@ -1,5 +1,16 @@
 #include "encoders.h"
 
+void resetPowerLevels() {
+  powerLevels[0] = 6;
+  powerLevels[1] = 6;
+  powerLevels[2] = 6;
+  powerLevels[3] = 6;
+  value[0] = 60;
+  value[1] = 60;
+  value[2] = 60;
+  value[3] = 60;
+}
+
 void setupEncoders() {
   encoders[0] = new ClickEncoder(4 , 5);
   encoders[0]->setAccelerationEnabled(false);
@@ -10,11 +21,7 @@ void setupEncoders() {
   encoders[3] = new ClickEncoder(10, 11);
   encoders[3]->setAccelerationEnabled(false);
 
-  powerLevels[0] = 60;
-  powerLevels[1] = 60;
-  powerLevels[2] = 60;
-  powerLevels[3] = 60;
-
+  resetPowerLevels();
 
   Timer1.initialize(1000);
   Timer1.attachInterrupt(timerEncoderServicing);

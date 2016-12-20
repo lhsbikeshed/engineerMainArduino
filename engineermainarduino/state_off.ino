@@ -2,6 +2,7 @@
 
 void setStateOff() {
   resetLEDs();
+  resetPowerLevels();
   setBlinkSpeed(100);
 }
 

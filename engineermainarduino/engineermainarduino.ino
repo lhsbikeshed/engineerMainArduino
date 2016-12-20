@@ -57,6 +57,7 @@ void setState(State state) {
 void reset() {
   resetLEDs();
   resetSwitches();
+  resetPowerLevels();
 
   *ledReactor = BrightRed;
 
