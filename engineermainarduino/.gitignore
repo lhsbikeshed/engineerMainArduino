@@ -5,3 +5,5 @@ Visual Micro/
 *.suo
 *.sdf
 *.vcxproj*
+__vm
+*.VC.db
