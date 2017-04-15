@@ -33,7 +33,6 @@ void timerEncoderServicing() {
   }
 }
 
-
 void readEncoders() {
   int powerlevel = 0;
   boolean sendValues = false;
@@ -41,8 +40,7 @@ void readEncoders() {
     int v = encoders[i]->getValue();
     if (v > 0) {
       setValue(i, 3);
-    }
-    else if ( v < 0) {
+    } else if (v < 0) {
       setValue(i, -3);
     }
 
@@ -71,8 +69,7 @@ void setValue(int index, int val) {
   // if were trying to move a dial out of bounds then return straight away
   if (value[index] <= 0 && sign == -1) {
     return;
-  }
-  else if (value[index] >= 120 && sign == 1) {
+  } else if (value[index] >= 120 && sign == 1) {
     return;
   }
 
@@ -80,25 +77,23 @@ void setValue(int index, int val) {
   if (value[index] + val < 0) {
     remainderToAssign -= abs(value[index] + val);
     value[index] = 0;
-  }
-  else if (value[index] + val > 120) {
+  } else if (value[index] + val > 120) {
     remainderToAssign -= value[index] + val - 120;
     Serial.println(remainderToAssign);
     value[index] = 120;
-  }
-  else {
+  } else {
     value[index] += val;
   }
 
   // add remainder to everything else
-  int nextIndex = (index + 1 ) % 4;
+  int nextIndex = (index + 1) % 4;
   while (remainderToAssign > 0) {
-    if (value[nextIndex] - sign  >= 0 && value[nextIndex] - sign  < 120) {
+    if (value[nextIndex] - sign >= 0 && value[nextIndex] - sign < 120) {
       value[nextIndex] += -sign;
       remainderToAssign--;
     }
 
-    nextIndex ++;
+    nextIndex++;
     nextIndex %= 4;
 
     if (nextIndex == index) {

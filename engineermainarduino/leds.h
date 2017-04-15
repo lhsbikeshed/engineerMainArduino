@@ -7,14 +7,14 @@
 
 // led states
 CRGB leds[NUMPIXELS];
-CRGB *ledsPanel = &leds[0],
-  *ledRings[NUM_RINGS] = {
-    &leds[NUM_PANEL_LEDS],
-    &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 1],
-    &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 2],
-    &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 3]
-  },
-  *ledReactor = &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * NUM_RINGS];
+CRGB *ledsPanel = &leds[0];
+CRGB *ledRings[NUM_RINGS] = {
+  &leds[NUM_PANEL_LEDS],
+  &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 1],
+  &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 2],
+  &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * 3]
+};
+CRGB *ledReactor = &leds[NUM_PANEL_LEDS + PIXELS_PER_RING * NUM_RINGS];
 
 // LED Ring
 boolean ringLightState = false;

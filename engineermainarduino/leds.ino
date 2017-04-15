@@ -30,14 +30,13 @@ void setBlinkSpeed(int blinkSpeed) {
 
 void LEDBlinkThink() {
   // thingy counter
-  counter ++;
+  counter++;
   // blinker
   if (lastBlinkTime + nextBlinkTime < counter) {
     lastBlinkTime = counter;
     blinker = !blinker;
   }
 }
-
 
 void showLEDs() {
   FastSPI_LED.show();
@@ -62,7 +61,7 @@ void updatePowerRings() {
   CRGB ringColour;
   for (i = 0; i < NUM_RINGS; i++) {
     powerLevel = powerLevels[i];
-    if (powerLevel < 4 && ! blinker) {
+    if (powerLevel < 4 && !blinker) {
       continue;
     }
     if (powerLevel == 0) {

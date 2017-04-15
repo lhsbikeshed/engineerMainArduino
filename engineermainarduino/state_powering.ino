@@ -11,8 +11,7 @@ void statePowering() {
   for (int i = 0; i < NUM_PANEL_LEDS; ++i) {
     if (switches[i] == SWITCH_POS_MID) {
       ledsPanel[i] = PanelYellow;
-    }
-    else if (switches[i] == SWITCH_POS_UP) {
+    } else if (switches[i] == SWITCH_POS_UP) {
       ledsPanel[i] = PanelGreen;
     }
   }
@@ -26,7 +25,7 @@ void statePowering() {
   }
 
   // did the switches change? if so then set the next one in sequence to green and transmit the current switch state
-  if (! expectSwitchChange(curLight, SWITCH_POS_UP)) {
+  if (!expectSwitchChange(curLight, SWITCH_POS_UP)) {
     return;
   }
 

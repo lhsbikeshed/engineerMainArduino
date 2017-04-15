@@ -72,18 +72,18 @@ void readSwitches() {
 
   delay(5);
 
-  for (int i = 0 ; i < 16; i++) {
+  for (int i = 0; i < 16; i++) {
     digitalWrite(PIN_CLOCK, LOW);
     byte a = digitalRead(PIN_DATA);
-    switchPos |= ( (long)a << i);
+    switchPos |= ((long)a << i);
     digitalWrite(PIN_CLOCK, HIGH);
   }
 
   for (int i = 0; i < 5; i++) {
-    byte p = (switchPos & 1l << switchMap[i * 2] ) == 0 ? 0 : 1;
-    byte p2 = (switchPos & 1l << switchMap[i * 2 + 1] ) == 0 ? 0 : 1;
+    byte p = (switchPos & 1l << switchMap[i * 2]) == 0 ? 0 : 1;
+    byte p2 = (switchPos & 1l << switchMap[i * 2 + 1]) == 0 ? 0 : 1;
     p2 <<= 1;
-    p = p2 | p ;
+    p = p2 | p;
 
     switches[i] = p;
     if (lastSwitches[i] != switches[i]) {

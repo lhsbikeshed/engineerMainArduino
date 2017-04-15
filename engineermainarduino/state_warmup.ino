@@ -23,7 +23,7 @@ void stateWarmup() {
     ledsPanel[curLight] = PanelYellow;
   }
 
-  if (! expectSwitchChange(curLight, SWITCH_POS_MID)){
+  if (!expectSwitchChange(curLight, SWITCH_POS_MID)) {
     return;
   }
 
@@ -36,4 +36,3 @@ void stateWarmup() {
     setState(STATE_POWERING);
   }
 }
-
