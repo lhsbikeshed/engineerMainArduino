@@ -1,30 +1,24 @@
 #include "switches.h"
 
-#define PIN_DATA  12
-#define PIN_CLOCK 3
-#define PIN_LOAD  2
+#define NUM_SWITCH_INPUTS NUM_TOP_SWITCHES * 2
+// We count backwards
+#define PIN_FIRST_SWITCH 45
+#define PIN_REACTOR 47
 
-byte lastSwitches[6];
-byte lastReactor;
-
-// map bits to switch num and pos
-// {bit, switch pos }
-byte switchMap[] = {
-  3, 2,
-  1, 0,
-  7, 6,
-  5, 4,
-  12, 13
+byte switchOrder[] = {
+  1, 3, 0, 2, 4,
 };
 
-long switchPos = 0;
+byte lastSwitches[NUM_REACTOR_SWITCHES];
 
 void setupSwitches() {
-  pinMode(PIN_CLOCK, OUTPUT);
-  pinMode(PIN_LOAD, OUTPUT);
-  pinMode(PIN_DATA, INPUT);
-
-  digitalWrite(PIN_CLOCK, LOW);
+  pinMode(PIN_REACTOR, INPUT);
+  digitalWrite(PIN_REACTOR, HIGH);
+  for (int i = 0; i < NUM_SWITCH_INPUTS; i++) {
+    int pin = PIN_FIRST_SWITCH - i;
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, HIGH);
+  }
 }
 
 void resetSwitches() {
@@ -61,42 +55,40 @@ void resetSwitches() {
 
   // Reset the bootup sequence
   currentSwitch = 0;
+  memset(lastSwitches, 255, NUM_REACTOR_SWITCHES);
   Serial.print("S0,");
 }
 
 void readSwitches() {
-  switchPos = 0;
   switchesChanged = false;
-  digitalWrite(PIN_LOAD, LOW);
-  digitalWrite(PIN_LOAD, HIGH);
 
-  delay(5);
+  memset(switches, SWITCH_POS_MID, NUM_REACTOR_SWITCHES);
 
-  for (int i = 0; i < 16; i++) {
-    digitalWrite(PIN_CLOCK, LOW);
-    byte a = digitalRead(PIN_DATA);
-    switchPos |= ((long)a << i);
-    digitalWrite(PIN_CLOCK, HIGH);
+  for (int i = 0; i < NUM_SWITCH_INPUTS; i++) {
+    int data = digitalRead(PIN_FIRST_SWITCH - i);
+
+    bool isUp = i % 2 == 0;
+    int switchLoc = switchOrder[i / 2];
+
+    if (data != 0) {
+      continue;
+    }
+
+    if (isUp) {
+      switches[switchLoc] = SWITCH_POS_UP;
+    } else {
+      switches[switchLoc] = SWITCH_POS_DOWN;
+    }
   }
 
-  for (int i = 0; i < 5; i++) {
-    byte p = (switchPos & 1l << switchMap[i * 2]) == 0 ? 0 : 1;
-    byte p2 = (switchPos & 1l << switchMap[i * 2 + 1]) == 0 ? 0 : 1;
-    p2 <<= 1;
-    p = p2 | p;
+  switches[REACTOR_SWITCH] = digitalRead(PIN_REACTOR);
 
-    switches[i] = p;
+  for (int i = 0; i < NUM_REACTOR_SWITCHES; i++) {
     if (lastSwitches[i] != switches[i]) {
-      lastSwitches[i] = p;
+      lastSwitches[i] = switches[i];
       lastChangedSwitch = i;
       switchesChanged = true;
     }
-  }
-  switches[5] = (switchPos & 1l << 15) == 0 ? 1 : 0; // inverted for the power switch
-  if (switches[5] != lastReactor) {
-    lastReactor = switches[5];
-    switchesChanged = true;
-    lastChangedSwitch = 5;
   }
 }
 
