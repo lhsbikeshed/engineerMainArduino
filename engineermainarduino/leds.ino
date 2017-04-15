@@ -1,6 +1,6 @@
 #include "leds.h"
 
-#define LED_PIN 13
+#define LED_PIN 48
 
 // blinking stuff
 int lastBlinkTime = 0;

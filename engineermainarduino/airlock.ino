@@ -1,6 +1,6 @@
-#define PIN_AIRLOCK 16
-#define PIN_ENCODER_A 5
-#define PIN_ENCODER_B 4
+#define PIN_AIRLOCK 53
+#define PIN_ENCODER_A A1
+#define PIN_ENCODER_B A0
 
 // analog bits
 int lastA = -1;

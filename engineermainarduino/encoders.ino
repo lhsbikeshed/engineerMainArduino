@@ -12,13 +12,13 @@ void resetPowerLevels() {
 }
 
 void setupEncoders() {
-  encoders[0] = new ClickEncoder(4 , 5);
+  encoders[0] = new ClickEncoder(21, 20);
   encoders[0]->setAccelerationEnabled(false);
-  encoders[1] = new ClickEncoder(6, 7);
+  encoders[1] = new ClickEncoder(19, 18);
   encoders[1]->setAccelerationEnabled(false);
-  encoders[2] = new ClickEncoder(8, 9);
+  encoders[2] = new ClickEncoder(17, 16);
   encoders[2]->setAccelerationEnabled(false);
-  encoders[3] = new ClickEncoder(10, 11);
+  encoders[3] = new ClickEncoder(15, 14);
   encoders[3]->setAccelerationEnabled(false);
 
   resetPowerLevels();
